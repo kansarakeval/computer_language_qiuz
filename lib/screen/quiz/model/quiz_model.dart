@@ -14,5 +14,11 @@ class QuizModel{
       category: m1['category'],
     );
   }
+}
 
+class RandomlyModel {
+  String? question, correct_answer;
+  List? option;
+
+  RandomlyModel({this.question, this.correct_answer, this.option});
 }

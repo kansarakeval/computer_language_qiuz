@@ -10,7 +10,8 @@ class ApiHelper{
 
   //category
   Future<List<CategoryModel>?> categoryApi() async {
-    String apiLink = "http://192.168.2.11/larening%20quiz/api/creadapi.php";
+    // String apiLink = "http://192.168.2.11/larening%20quiz/api/creadapi.php";
+    String apiLink = "http://192.168.31.177/larening%20quiz/api/creadapi.php";
     var response = await http.get(Uri.parse(apiLink));
 
     if (response.statusCode == 200) {
@@ -25,7 +26,8 @@ class ApiHelper{
 
   //quiz
   Future<List<QuizModel>?> quizApi() async {
-    String apiLink = "http://192.168.2.11/larening%20quiz/api/readapi.php";
+    // String apiLink = "http://192.168.2.11/larening%20quiz/api/readapi.php";
+    String apiLink = "http://192.168.31.177/larening%20quiz/api/readapi.php";
     var response = await http.get(Uri.parse(apiLink));
 
     if (response.statusCode == 200) {
