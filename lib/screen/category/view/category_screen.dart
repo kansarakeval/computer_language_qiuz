@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:main_flutter_exam/screen/category/controller/category_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
@@ -12,26 +12,30 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> with SingleTickerProviderStateMixin {
   CategoryController controller = Get.put(CategoryController());
-  late AnimationController _animationController;
+  late AnimationController animationController;
 
   @override
   void initState() {
     super.initState();
     controller.getCategory();
 
-    _animationController = AnimationController(
+    animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    _animationController.forward();
+    animationController.forward();
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
+    animationController.dispose();
     super.dispose();
   }
 
+  Future<void> logout() async {
+    SharedPreferences shr = await SharedPreferences.getInstance();
+    shr.setBool("login", false);
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -51,6 +55,15 @@ class _CategoryScreenState extends State<CategoryScreen> with SingleTickerProvid
                   centerTitle: true,
                   backgroundColor: Colors.transparent,
                   elevation: 0,
+                  actions: [
+                    IconButton(
+                      icon: Icon(Icons.logout),
+                      onPressed:() async {
+                        await logout();
+                        Get.offAllNamed('signIn');
+                      },
+                    )
+                  ],
                 ),
                 Expanded(
                   child: Obx(
@@ -79,7 +92,7 @@ class _CategoryScreenState extends State<CategoryScreen> with SingleTickerProvid
       begin: const Offset(0, 1),
       end: Offset.zero,
     ).animate(CurvedAnimation(
-      parent: _animationController,
+      parent: animationController,
       curve: Interval(
         (1 / 20) * index,
         1.0,
@@ -88,12 +101,12 @@ class _CategoryScreenState extends State<CategoryScreen> with SingleTickerProvid
     ));
 
     return AnimatedBuilder(
-      animation: _animationController,
+      animation: animationController,
       builder: (context, child) {
         return SlideTransition(
           position: animation,
           child: AnimatedOpacity(
-            opacity: _animationController.value,
+            opacity: animationController.value,
             duration: const Duration(milliseconds: 500),
             child: child,
           ),

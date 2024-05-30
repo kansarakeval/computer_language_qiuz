@@ -1,44 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:main_flutter_exam/utils/share_helper.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
+  late AnimationController controller;
+  late Animation<double> animation;
+  bool? introStatus;
 
   @override
   void initState() {
     super.initState();
+    createdata();
 
-    _controller = AnimationController(
+    controller = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,
     );
-    _animation = CurvedAnimation(
-      parent: _controller,
+    animation = CurvedAnimation(
+      parent: controller,
       curve: Curves.easeIn,
     );
 
-    _controller.forward();
+    controller.forward();
 
-    // Navigate to the next screen after the animation completes
     Future.delayed(
       const Duration(seconds: 3),
           () {
-        Get.offAllNamed('category');
+        Get.offAllNamed(introStatus == false || introStatus == null ? 'signIn' : 'category');
       },
     );
   }
 
+  void createdata() async {
+    ShareHelper shr = ShareHelper();
+    introStatus = await shr.getLoginStatus();
+
+  }
+
   @override
   void dispose() {
-    _controller.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -48,19 +56,18 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       child: Scaffold(
         body: Stack(
           children: [
-            // Background image
             Positioned.fill(
               child: Image.asset(
-                'asset/img/s1.jpg', // Replace with your background image path
+                'asset/img/s1.jpg',
                 fit: BoxFit.cover,
               ),
             ),
             // Animated logo
             Center(
               child: FadeTransition(
-                opacity: _animation,
+                opacity: animation,
                 child: Image.asset(
-                  "asset/img/l1.png", // Replace with your logo image path
+                  "asset/img/l1.png",
                   width: 200,
                   height: 200,
                   fit: BoxFit.cover,

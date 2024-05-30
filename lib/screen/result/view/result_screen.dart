@@ -12,32 +12,32 @@ class ResultScreen extends StatefulWidget {
 
 class _ResultScreenState extends State<ResultScreen> with SingleTickerProviderStateMixin {
   QuizController controller = Get.put(QuizController());
-  late AnimationController _animationController;
-  late Animation<double> _opacityAnimation;
-  late Animation<double> _scaleAnimation;
+  late AnimationController animationController;
+  late Animation<double> opacityAnimation;
+  late Animation<double> scaleAnimation;
 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(
+    animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
     );
 
-    _opacityAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
+    opacityAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.easeIn),
     );
 
-    _scaleAnimation = Tween<double>(begin: 0.8, end: 1).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.elasticOut),
+    scaleAnimation = Tween<double>(begin: 0.8, end: 1).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.elasticOut),
     );
 
-    _animationController.forward();
+    animationController.forward();
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
+    animationController.dispose();
     super.dispose();
   }
 
@@ -60,10 +60,10 @@ class _ResultScreenState extends State<ResultScreen> with SingleTickerProviderSt
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AnimatedBuilder(
-                    animation: _opacityAnimation,
+                    animation: opacityAnimation,
                     builder: (context, child) {
                       return Opacity(
-                        opacity: _opacityAnimation.value,
+                        opacity: opacityAnimation.value,
                         child: child,
                       );
                     },
@@ -86,10 +86,10 @@ class _ResultScreenState extends State<ResultScreen> with SingleTickerProviderSt
                   ),
                   const SizedBox(height: 20),
                   AnimatedBuilder(
-                    animation: _scaleAnimation,
+                    animation: scaleAnimation,
                     builder: (context, child) {
                       return Transform.scale(
-                        scale: _scaleAnimation.value,
+                        scale: scaleAnimation.value,
                         child: child,
                       );
                     },
