@@ -30,7 +30,7 @@ class _QuizScreenState extends State<QuizScreen> {
             // Background image
             Positioned.fill(
               child: Image.asset(
-                'asset/img/b1.jpg',
+                'asset/img/b6.jpg',
                 fit: BoxFit.cover,
               ),
             ),

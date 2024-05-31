@@ -10,8 +10,8 @@ class ApiHelper {
 
   //category
   Future<List<CategoryModel>?> categoryApi() async {
-    String apiLink = "http://192.168.2.11/larening%20quiz/api/creadapi.php";
-    // String apiLink = "http://192.168.31.177/larening%20quiz/api/creadapi.php";
+    //String apiLink = "http://192.168.2.11/larening%20quiz/api/creadapi.php";
+    String apiLink = "http://192.168.31.177/larening%20quiz/api/creadapi.php";
     var response = await http.get(Uri.parse(apiLink));
 
     if (response.statusCode == 200) {
@@ -26,8 +26,8 @@ class ApiHelper {
 
   //quiz
   Future<List<QuizModel>?> quizApi() async {
-    String apiLink = "http://192.168.2.11/larening%20quiz/api/readapi.php";
-    //String apiLink = "http://192.168.31.177/larening%20quiz/api/readapi.php";
+    //String apiLink = "http://192.168.2.11/larening%20quiz/api/readapi.php";
+    String apiLink = "http://192.168.31.177/larening%20quiz/api/readapi.php";
     var response = await http.get(Uri.parse(apiLink));
 
     if (response.statusCode == 200) {
@@ -43,7 +43,7 @@ class ApiHelper {
   Future<Map<String, dynamic>> signUp(
       String name, String email, String password) async {
     final response = await http.post(
-      Uri.parse('http://192.168.2.11/larening%20quiz/user/signup.php'),
+      Uri.parse('http://192.168.31.177/larening%20quiz/user/signup.php'),
       body: {
         'name': name,
         'email': email,
@@ -55,7 +55,7 @@ class ApiHelper {
 
   Future<Map<String, dynamic>> signIn(String email, String password) async {
     final response = await http.post(
-      Uri.parse('http://192.168.2.11/larening%20quiz/user/signin.php'),
+      Uri.parse('http://192.168.31.177/larening%20quiz/user/signin.php'),
       body: {
         'email': email,
         'password': password,
@@ -67,7 +67,7 @@ class ApiHelper {
 
   Future<void> logout() async {
     await http.post(
-      Uri.parse('http://192.168.2.11/lARENING%20QUIZ/user/logout.php'),
+      Uri.parse('http://192.168.31.177/lARENING%20QUIZ/user/logout.php'),
     );
   }
 }

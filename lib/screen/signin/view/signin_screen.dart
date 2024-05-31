@@ -17,87 +17,105 @@ class _SigninScreenState extends State<SigninScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 70,
-              ),
-              Image.asset('asset/img/Login-pana.png', height: 200),
-              // Placeholder for logo
-              const SizedBox(height: 40),
-              TextField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  prefixIcon: const Icon(Icons.email),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                ),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                controller: passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  prefixIcon: const Icon(Icons.lock),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                ),
-                obscureText: true,
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  textStyle: const TextStyle(fontSize: 16),
-                ),
-                onPressed: () async {
-                  ShareHelper shr = ShareHelper();
-                  Map log = await shr.getEmailPassword();
-
-                  if (emailController.text == log['email'] &&
-                      passwordController.text == log['password']) {
-                    await shr.setLoginLogout(true);
-                    final response = await ApiHelper.apiHelper.signIn(
-                      emailController.text,
-                      passwordController.text,
-                    );
-                    Get.offAllNamed('category');
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text("Email and password invalid")));
-                  }
-                },
-                // async {
-                //   final response = await ApiHelper.apiHelper.signIn(
-                //     emailController.text,
-                //     passwordController.text,
-                //   );
-                //   Get.offAllNamed('category');
-                // },
-                child: const Text('Sign In'),
-              ),
-              const SizedBox(height: 20),
-              InkWell(
-                onTap: () {
-                  Get.toNamed('signUp');
-                },
-                child: const Text(
-                  "Create new account? Sign Up",
-                  style: TextStyle(
-                      color: Colors.blue, decoration: TextDecoration.underline),
-                ),
-              ),
-            ],
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'asset/img/b2.jpg',
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
+          Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('asset/img/Login-pana.png', height: 200),
+                  const SizedBox(height: 40),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: TextField(
+                      controller: emailController,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        prefixIcon: const Icon(Icons.email),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: TextField(
+                      controller: passwordController,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        prefixIcon: const Icon(Icons.lock),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      obscureText: true,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 50, vertical: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      textStyle: const TextStyle(fontSize: 16),
+                    ),
+                    onPressed: () async {
+                      ShareHelper shr = ShareHelper();
+                      Map log = await shr.getEmailPassword();
+                      final response = await ApiHelper.apiHelper.signIn(
+                        emailController.text,
+                        passwordController.text,
+                      );
+                      if (emailController.text == log['email'] &&
+                          passwordController.text == log['password']) {
+                        await shr.setLoginLogout(true);
+
+                        Get.offAllNamed('category');
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text("Email and password invalid")),
+                        );
+                      }
+                    },
+                    child: const Text('Sign In'),
+                  ),
+                  const SizedBox(height: 20),
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed('signUp');
+                    },
+                    child: const Text(
+                      "Create new account? Sign Up",
+                      style: TextStyle(
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -44,7 +44,7 @@ class _CategoryScreenState extends State<CategoryScreen> with SingleTickerProvid
           children: [
             Positioned.fill(
               child: Image.asset(
-                'asset/img/b1.jpg',
+                'asset/img/b5.jpg',
                 fit: BoxFit.cover,
               ),
             ),

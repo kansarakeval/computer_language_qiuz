@@ -50,7 +50,7 @@ class _ResultScreenState extends State<ResultScreen> with SingleTickerProviderSt
             // Background image
             Positioned.fill(
               child: Image.asset(
-                'asset/img/b1.jpg',
+                'asset/img/b7.jpg',
                 fit: BoxFit.cover,
               ),
             ),
