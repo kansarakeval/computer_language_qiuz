@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:main_flutter_exam/screen/category/model/category_model.dart';
 import 'package:main_flutter_exam/screen/quiz/controller/quiz_controller.dart';
 
@@ -53,9 +52,14 @@ class _QuizScreenState extends State<QuizScreen> {
                       children: [
                         Text(
                           "${controller.randomlyList.value![controller.index.value].question}",
-                          style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
+                        const SizedBox(height: 10),
+                        Obx(() => Text(
+                          "Time left: ${controller.timeLeft.value} seconds",
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.red),
+                        )),
                         const SizedBox(height: 10),
                         buttonTile(context, "${controller.randomlyList.value![controller.index.value].option![0]}"),
                         const SizedBox(height: 10),
@@ -98,7 +102,7 @@ class _QuizScreenState extends State<QuizScreen> {
               child: Text(
                 ans,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Colors.black),
+                style: const TextStyle(color: Colors.black),
               ),
             ),
           ],
