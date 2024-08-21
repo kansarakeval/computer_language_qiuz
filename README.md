@@ -11,6 +11,7 @@ A new Flutter project.
 - shared preferences 
 - Login
 - Registration
+- Logout
 - Animation
 
 <p>
